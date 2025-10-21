@@ -1,7 +1,7 @@
 namespace ToDoList.Test;
 
 using ToDoList.Domain.Models;
-using ToDoList.WebApi;
+using ToDoList.WebApi.Controllers;
 
 public class GetTests
 {
