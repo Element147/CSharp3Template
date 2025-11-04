@@ -4,16 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Domain.DTOs;
 using ToDoList.Domain.Models;
 using ToDoList.Persistence;
+using ToDoList.Persistence.Repositories;
 
 [Route("api/[controller]")] //localhost:5000/api/ToDoItems
 [ApiController]
 public class ToDoItemsController : ControllerBase
 {
-    private readonly ToDoItemsContext context;
+    private readonly IRepository<ToDoItem> repository;
 
-    public ToDoItemsController(ToDoItemsContext context)
+    public ToDoItemsController(IRepository<ToDoItem> repository)
     {
-        this.context = context;
+        this.repository = repository;
     }
 
     [HttpPost]
@@ -25,8 +26,7 @@ public class ToDoItemsController : ControllerBase
         //try to create an item
         try
         {
-            context.ToDoItems.Add(item);
-            context.SaveChanges();
+            repository.Create(item);
         }
         catch (Exception ex)
         {
@@ -46,7 +46,7 @@ public class ToDoItemsController : ControllerBase
         List<ToDoItem> itemsToGet;
         try
         {
-            itemsToGet = context.ToDoItems.ToList();
+            itemsToGet = repository.GetAll();
         }
         catch (Exception ex)
         {
@@ -66,7 +66,7 @@ public class ToDoItemsController : ControllerBase
         ToDoItem? itemToGet;
         try
         {
-            itemToGet = context.ToDoItems.Find(toDoItemId);
+            itemToGet = repository.ReadById(toDoItemId);
         }
         catch (Exception ex)
         {
@@ -89,7 +89,7 @@ public class ToDoItemsController : ControllerBase
         try
         {
             //retrieve the item
-            var itemToUpdate = context.ToDoItems.Find(toDoItemId);
+            var itemToUpdate = repository.ReadById(toDoItemId);
             if (itemToUpdate is null)
             {
                 return NotFound(); //404
@@ -99,8 +99,7 @@ public class ToDoItemsController : ControllerBase
             itemToUpdate.Name = updatedItem.Name;
             itemToUpdate.Description = updatedItem.Description;
             itemToUpdate.IsCompleted = updatedItem.IsCompleted;
-
-            context.SaveChanges();
+            repository.UpdateById(itemToUpdate);
         }
         catch (Exception ex)
         {
@@ -117,13 +116,13 @@ public class ToDoItemsController : ControllerBase
         //try to delete the item
         try
         {
-            var itemToDelete = context.ToDoItems.Find(toDoItemId);
+            var itemToDelete = repository.ReadById(toDoItemId);
             if (itemToDelete is null)
             {
                 return NotFound(); //404
             }
-            context.ToDoItems.Remove(itemToDelete);
-            context.SaveChanges();
+
+            bool success = repository.DeleteById(toDoItemId);
         }
         catch (Exception ex)
         {
