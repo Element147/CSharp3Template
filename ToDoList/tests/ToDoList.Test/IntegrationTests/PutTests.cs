@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Domain.DTOs;
 using ToDoList.Domain.Models;
 using ToDoList.Persistence;
+using ToDoList.Persistence.Repositories;
 using ToDoList.WebApi.Controllers;
 
 public class PutTests
@@ -12,9 +13,9 @@ public class PutTests
     public void Put_ValidId_ReturnsNoContent()
     {
         // Arrange
-        var connectionString = "Data Source=../../../IntegrationTests/data/localdb_test.db";
-        using var context = new ToDoItemsContext(connectionString);
-        var controller = new ToDoItemsController(context);
+        var context = new ToDoItemsContext("Data Source=../../../IntegrationTests/data/localdb_test.db");
+        var repository = new ToDoItemsRepository(context);
+        var controller = new ToDoItemsController(repository);
 
         var toDoItem = new ToDoItem
         {
@@ -46,9 +47,9 @@ public class PutTests
     public void Put_InvalidId_ReturnsNotFound()
     {
         // Arrange
-        var connectionString = "Data Source=../../../IntegrationTests/data/localdb_test.db";
-        using var context = new ToDoItemsContext(connectionString);
-        var controller = new ToDoItemsController(context);
+        var context = new ToDoItemsContext("Data Source=../../../IntegrationTests/data/localdb_test.db");
+        var repository = new ToDoItemsRepository(context);
+        var controller = new ToDoItemsController(repository);
 
         var request = new ToDoItemUpdateRequestDto(
             Name: "Jine jmeno",
