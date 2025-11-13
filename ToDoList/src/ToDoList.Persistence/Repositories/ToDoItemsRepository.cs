@@ -2,14 +2,11 @@ using ToDoList.Domain.Models;
 
 namespace ToDoList.Persistence.Repositories;
 
-public class ToDoItemsRepository : IRepository<ToDoItem>
+public class ToDoItemsRepository(ToDoItemsContext context) : IRepository<ToDoItem>
 {
 
-    private readonly ToDoItemsContext context;
-    public ToDoItemsRepository(ToDoItemsContext context)
-    {
-        this.context = context;
-    }
+    private readonly ToDoItemsContext context = context;
+
     public void Create(ToDoItem item)
     {
         context.ToDoItems.Add(item);
@@ -29,15 +26,9 @@ public class ToDoItemsRepository : IRepository<ToDoItem>
         return true;
     }
 
-    public List<ToDoItem> GetAll()
-    {
-        return context.ToDoItems.ToList();
-    }
+    public List<ToDoItem> GetAll() => context.ToDoItems.ToList();
 
-    public ToDoItem ReadById(int toDoItemId)
-    {
-        return context.ToDoItems.Find(toDoItemId);
-    }
+    public ToDoItem? ReadById(int id) => context.ToDoItems.Find(id);
 
     public void UpdateById(ToDoItem itemToUpdate)
     {

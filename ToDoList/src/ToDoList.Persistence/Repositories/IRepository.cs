@@ -8,6 +8,6 @@ public interface IRepository<T>
     public void Create(T item);
     bool DeleteById(int id);
     List<T> GetAll();
-    T ReadById(int id);
+    T? ReadById(int id);
     void UpdateById(T item);
 }
