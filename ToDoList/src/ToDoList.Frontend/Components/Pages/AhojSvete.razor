@@ -1,0 +1,25 @@
+﻿@page "/ahojsvete"
+@rendermode InteractiveServer
+
+
+<h3>@Introduce()</h3>
+
+<p>Hodnota: @currentCount</p>
+<button @onclick="IncrementCount">Increase counter</button>
+
+
+<Dashboard />
+
+@code {
+
+    private int currentCount = 0;
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private string Introduce()
+    {
+        return "Ahoj světe!";
+    }
+}

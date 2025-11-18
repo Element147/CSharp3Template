@@ -1,0 +1,31 @@
+@using System.Security.Permissions
+@using Microsoft.VisualBasic
+@using ToDoList.Frontend.Models
+
+<h3>Dashboard</h3>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nayzev</th>
+                <th>ID</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in new List<ToDoItemView> { firstItem })
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@(item.IsCompleted ? "Dokonceny" : "Nedokonceny")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@code {
+    ToDoItemView firstItem = new ToDoItemView(1, "First item", "Description", false);
+}
