@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in new List<ToDoItemView> { firstItem })
+            @foreach (var item in testData)
             {
                 <tr>
                     <td>@item.Id</td>
@@ -27,5 +27,12 @@
     </table>
 </div>
 @code {
-    ToDoItemView firstItem = new ToDoItemView(1, "First item", "Description", false);
+    private List<ToDoItemView> testData = new()
+{
+new ToDoItemView(1, "Nakoupit potraviny", "Mléko, chléb, vejce", false),
+new ToDoItemView(2, "Dokončit projekt", "Implementovat všechny funkce", true),
+new ToDoItemView(3, "Zavolat mamince", "Domluvit víkend", false),
+new ToDoItemView(4, "Cvičit", "Běhání v parku", false),
+new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)
+};
 }
