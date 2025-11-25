@@ -1,6 +1,9 @@
 @using System.Security.Permissions
 @using Microsoft.VisualBasic
+@using ToDoList.Frontend.Clients
 @using ToDoList.Frontend.Models
+
+@inject IToDoItemsClient todoItemsClient
 
 <h3>Dashboard</h3>
 <div>
@@ -28,13 +31,14 @@
 </div>
 @code {
     private List<ToDoItemView> testData = new List<ToDoItemView>()
-{
-new ToDoItemView(1, "Nakoupit potraviny", "Mléko, chléb, vejce", false),
-new ToDoItemView(8, "Dokončit projekt", "Implementovat všechny funkce", true),
-new ToDoItemView(3, "Zavolat mamince", "Domluvit víkend", false),
-new ToDoItemView(4, "Cvičit", "Běhání v parku", false),
-new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)
-};
+    {
+        /*
+        new ToDoItemView(1, "Nakoupit potraviny", "Mléko, chléb, vejce", false),
+        new ToDoItemView(8, "Dokončit projekt", "Implementovat všechny funkce", true),
+        new ToDoItemView(3, "Zavolat mamince", "Domluvit víkend", false),
+        new ToDoItemView(4, "Cvičit", "Běhání v parku", false),
+        new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)*/
+    };
 
 
     public void OrderByName()
@@ -45,6 +49,11 @@ new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)
     public void OrderById()
     {
         testData = testData.OrderBy(item => item.Id).ToList();
+    }
+
+    protected override void OnInitialized()
+    {
+        testData = todoItemsClient.ReadItems();
     }
 
 }
