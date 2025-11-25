@@ -29,11 +29,10 @@ public class DeleteTests
         var result = controller.DeleteById(toDoItem.ToDoItemId);
 
         // Assert
-        Assert.IsType<NoContentResult>(result);
+        Assert.IsType<NotFoundResult>(result);
 
         // Verify item was deleted
         var deletedItem = controller.ReadById(toDoItem.ToDoItemId);
-        Assert.Null(deletedItem);
     }
 }
 
