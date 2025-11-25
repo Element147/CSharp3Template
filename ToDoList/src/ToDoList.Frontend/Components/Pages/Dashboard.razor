@@ -7,10 +7,10 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nayzev</th>
-                <th>ID</th>
-                <th>ID</th>
+                <th><button @onclick="OrderById">Id</button></th>
+                <th><button @onclick="OrderByName">Name</button></th>
+                <th>Description</th>
+                <th>IsCompleted</th>
             </tr>
         </thead>
         <tbody>
@@ -27,12 +27,24 @@
     </table>
 </div>
 @code {
-    private List<ToDoItemView> testData = new()
+    private List<ToDoItemView> testData = new List<ToDoItemView>()
 {
 new ToDoItemView(1, "Nakoupit potraviny", "Mléko, chléb, vejce", false),
-new ToDoItemView(2, "Dokončit projekt", "Implementovat všechny funkce", true),
+new ToDoItemView(8, "Dokončit projekt", "Implementovat všechny funkce", true),
 new ToDoItemView(3, "Zavolat mamince", "Domluvit víkend", false),
 new ToDoItemView(4, "Cvičit", "Běhání v parku", false),
 new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)
 };
+
+
+    public void OrderByName()
+    {
+        testData = testData.OrderBy(item => item.Name).ToList();
+    }
+
+    public void OrderById()
+    {
+        testData = testData.OrderBy(item => item.Id).ToList();
+    }
+
 }
