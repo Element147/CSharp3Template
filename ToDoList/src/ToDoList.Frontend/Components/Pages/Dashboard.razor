@@ -51,9 +51,9 @@
         testData = testData.OrderBy(item => item.Id).ToList();
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        testData = todoItemsClient.ReadItems();
+        testData = await todoItemsClient.ReadItemsAsync();
     }
 
 }
