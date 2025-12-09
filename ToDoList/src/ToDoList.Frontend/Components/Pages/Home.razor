@@ -26,23 +26,23 @@
         Console.WriteLine(msg);
     }
     protected override void OnInitialized()
-    {
-        NumberOperationDelegate mujDelegat; // deklarace
-        mujDelegat = Multiply;
-        mujDelegat += Multiply;
-        mujDelegat += Divide;
-        var result = mujDelegat(2, 3);
-        Console.WriteLine(result);
-        StringTakingDelegate mujDelegatNaStringy; //deklarace
-        mujDelegatNaStringy = LogToConsole;
-        mujDelegatNaStringy += LogToConsole;
-        mujDelegatNaStringy += LogToConsole;
-        mujDelegatNaStringy?.Invoke("LogujuDoKonzole");
+    {/*
+NumberOperationDelegate mujDelegat; // deklarace
+mujDelegat = Multiply;
+mujDelegat += Multiply;
+mujDelegat += Divide;
+var result = mujDelegat(2, 3);
+Console.WriteLine(result);
+StringTakingDelegate mujDelegatNaStringy; //deklarace
+mujDelegatNaStringy = LogToConsole;
+mujDelegatNaStringy += LogToConsole;
+mujDelegatNaStringy += LogToConsole;
+mujDelegatNaStringy?.Invoke("LogujuDoKonzole");
 
-        List<string> strings = ["a", "b", "c", "d", "e"];
+List<string> strings = ["a", "b", "c", "d", "e"];
 
 
-        Func <bool> functionReturningBool;
+Func <bool> functionReturningBool;*/
     }
 
 }

@@ -39,8 +39,14 @@
             }
         </tbody>
     </table>
+
+    <button class="btn btn-success" @onclick="ShowAll">Show All</button>
+    <button class="btn btn-success" @onclick="ShowCompleted">Show Completed</button>
+    <button class="btn btn-success" @onclick="ShowIncomplete">Show Incomplete</button>
+
 </div>
 @code {
+
     private List<ToDoItemView> testData = new List<ToDoItemView>()
     {
         /*

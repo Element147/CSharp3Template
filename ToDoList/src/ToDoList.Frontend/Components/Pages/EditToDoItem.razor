@@ -35,9 +35,18 @@
 
 
 @code {
+    public delegate void ToDoItemViewProcessingDelegate(ToDoItemView item);
+    ToDoItemViewProcessingDelegate SubmitDelegate;
+
+    private void logSubmit(ToDoItemView item)
+    {
+        Console.WriteLine("Item with id " + item.Id + " was submitted.");
+    }
+
     protected override async Task OnInitializedAsync()
     {
         ToDoItemModel = await toDoItemsClient.ReadItemByIdAsync(ItemId);
+        SubmitDelegate += logSubmit;
     }
 
     [Parameter]
@@ -49,6 +58,7 @@
     public async Task Submit()
     {
         await toDoItemsClient.UpdateItemAsync(ToDoItemModel);
+        SubmitDelegate?.Invoke(ToDoItemModel);
         NavigationManager.NavigateTo("/");
     }
 }
