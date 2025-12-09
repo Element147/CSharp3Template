@@ -48,4 +48,25 @@ public class ToDoItemsClient : IToDoItemsClient
         var itemRequest = new ToDoItemUpdateRequestDto(item.Name, item.Description, item.IsCompleted);
         var response = await httpClient.PutAsJsonAsync($"api/ToDoItems/{item.Id}", itemRequest);
     }
+
+    public async Task DeleteItemAsync(ToDoItemView itemView)
+    {
+        try
+        {
+            var response = await httpClient.DeleteAsync($"api/ToDoItems/{itemView.Id}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                Console.WriteLine($"DELETE request successful: Deleted ToDoItem with id {itemView.Id}.");
+                return;
+            }
+            else
+            {
+                Console.WriteLine($"DELETE request failed with status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Exception occured: {e.Message}");
+        }
+    }
 }

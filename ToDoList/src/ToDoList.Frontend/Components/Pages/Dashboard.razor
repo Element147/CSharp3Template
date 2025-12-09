@@ -27,7 +27,14 @@
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td>@(item.IsCompleted ? "Dokonceny" : "Nedokonceny")</td>
-                    <td><button class="btn btn-success" @onclick="() => EditItem(item)">Edit</button></td>
+                    <td><button class="btn btn-success" @onclick="() => EditItem(item)">Edit</button>
+                        <button class="btn btn-success" @onclick="() => ToggleItem(item)">
+                            <i class=@ConvertItemCompletionToToggleIconStyle(item.IsCompleted)></i>
+                        </button>
+                        <button class="btn btn-danger" @onclick="() => DeleteItem(item)">
+                            <i class="bi bi-x-square"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -65,5 +72,18 @@
     {
         testData = await todoItemsClient.ReadItemsAsync();
     }
+
+    private async Task DeleteItem(ToDoItemView item)
+    {
+        await todoItemsClient.DeleteItemAsync(item);
+    }
+
+    private async Task ToggleItem(ToDoItemView item)
+    {
+        item.IsCompleted = !item.IsCompleted;
+        await todoItemsClient.UpdateItemAsync(item);
+    }
+
+    private string ConvertItemCompletionToToggleIconStyle(bool isCompleted) => isCompleted ? "bi bi-check-square-fill" : "bi bi-check-square";
 
 }
